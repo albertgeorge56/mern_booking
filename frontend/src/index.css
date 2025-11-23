@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@theme {
+  --color-primary: var(--color-black);
+}
+
+@layer components {
+  .btn {
+    @apply flex items-center justify-center rounded-full border border-transparent px-6 pt-1.5 pb-2.5 text-sm font-semibold transition hover:bg-transparent;
+  }
+  .btn-primary {
+    @apply bg-primary text-white hover:border-primary hover:text-primary;
+  }
+  .btn-white {
+    @apply bg-white hover:border-white hover:text-white;
+  }
+}
+
+@layer utility {
+  .container {
+    @apply px-2 md:px-16;
+  }
+}

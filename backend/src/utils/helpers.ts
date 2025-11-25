@@ -8,7 +8,7 @@ export function genAuthToken(user: IUser) {
   });
 }
 
-export function sendAuthTokenCookie(res: Response, authToken: string) {
+export function setAuthTokenCookie(res: Response, authToken: string) {
   res.cookie("auth_token", authToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

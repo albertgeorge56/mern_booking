@@ -6,12 +6,13 @@ export interface IUser extends Document {
   password: string;
   firstName: string;
   lastName: string;
+  matchPassword(password: string): boolean;
 }
 
 const userSchema = new mongoose.Schema<IUser>(
   {
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
   },
@@ -24,6 +25,10 @@ userSchema.pre("save", function (next) {
   }
   next();
 });
+
+userSchema.methods.matchPassword = function (password: string): boolean {
+  return bcrypt.compareSync(password, this.password);
+};
 
 const User = mongoose.model<IUser>("User", userSchema);
 export default User;

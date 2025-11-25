@@ -1,7 +1,4 @@
 {
   "name": "shared",
-  "version": "1.0.0",
-  "dependencies": {
-    "zod": "^4.1.12"
-  }
+  "version": "1.0.0"
 }

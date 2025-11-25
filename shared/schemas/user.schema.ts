@@ -10,3 +10,9 @@ export const userRegisterSchema = z.object({
 });
 
 export type userRegisterSchemaType = z.infer<typeof userRegisterSchema>;
+
+export const userLoginSchema = userRegisterSchema.pick({
+  email: true,
+  password: true,
+});
+export type userLoginSchemaType = z.infer<typeof userLoginSchema>;

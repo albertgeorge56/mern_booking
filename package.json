@@ -16,5 +16,9 @@
   "devDependencies": {
     "concurrently": "^9.2.1",
     "prettier": "^3.6.2"
+  },
+  "dependencies": {
+    "http-status-codes": "^2.3.0",
+    "zod": "^4.1.13"
   }
 }

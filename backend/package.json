@@ -20,8 +20,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.20.0",
-    "shared": "*",
-    "zod": "^4.1.12"
+    "shared": "*"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

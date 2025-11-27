@@ -7,11 +7,9 @@ export default function Hero() {
           <h1 className="text-4xl leading-14 font-semibold text-white">
             Book Your Stay With BookHub
           </h1>
-          <p className="mt-2 text-xl text-white">
-            The Best Plans Start with One Click. Book Now.
-          </p>
+          <p className="mt-2 text-xl text-white">The Best Plans Start with One Click. Book Now.</p>
         </div>
       </div>
     </div>
-  );
+  )
 }

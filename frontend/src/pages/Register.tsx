@@ -2,6 +2,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { userRegisterSchema } from '../schemas/user.schema'
 import type { userRegisterSchemaType } from '../schemas/user.schema'
+import { useMutation } from '@tanstack/react-query'
+import * as authService from '../services/auth.service'
+import { toast } from 'sonner'
 
 export default function Register() {
     const {
@@ -19,16 +22,27 @@ export default function Register() {
         },
     })
 
+    const mutation = useMutation({
+        mutationFn: authService.register,
+        onSuccess: (res) => {
+            toast.success(res.data?.message)
+        },
+        onError: (err: any) => {
+            toast.error(err.response?.data?.error)
+        },
+    })
+
+    const onSubmit = (data: userRegisterSchemaType) => {
+        const { confirmPassword, ...dt } = data
+        console.log(dt)
+        mutation.mutate(dt)
+    }
+
     return (
         <div className="container">
             <form
                 className="max-w-2xl mx-auto"
-                onSubmit={handleSubmit(
-                    (data) => {
-                        console.log(data)
-                    },
-                    (errors) => console.log(errors)
-                )}
+                onSubmit={handleSubmit((data) => onSubmit(data))}
             >
                 <h1 className="text-2xl font-bold text-center mb-6">
                     Create an account

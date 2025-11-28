@@ -1,34 +1,41 @@
-import mongoose, { Document } from "mongoose";
-import bcrypt from "bcryptjs";
+import mongoose, { Document } from 'mongoose'
+import bcrypt from 'bcryptjs'
 
 export interface IUser extends Document {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  matchPassword(password: string): boolean;
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+  matchPassword(password: string): boolean
 }
 
 const userSchema = new mongoose.Schema<IUser>(
   {
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true, select: false },
+    password: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
   },
-  { timestamps: true }
-);
+  { timestamps: true, versionKey: false },
+)
 
-userSchema.pre("save", function (next) {
-  if (this.isModified("password")) {
-    this.password = bcrypt.hashSync(this.password);
+userSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    const { password, ...user } = ret
+    return user
+  },
+})
+
+userSchema.pre('save', function (next) {
+  if (this.isModified('password')) {
+    this.password = bcrypt.hashSync(this.password)
   }
-  next();
-});
+  next()
+})
 
 userSchema.methods.matchPassword = function (password: string): boolean {
-  return bcrypt.compareSync(password, this.password);
-};
+  return bcrypt.compareSync(password, this.password)
+}
 
-const User = mongoose.model<IUser>("User", userSchema);
-export default User;
+const User = mongoose.model<IUser>('User', userSchema)
+export default User

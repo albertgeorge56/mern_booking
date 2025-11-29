@@ -1,0 +1,9 @@
+// src/types/express.d.ts
+import { Request } from 'express'
+import { IUser } from '../models/user.model'
+
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: IUser
+  }
+}

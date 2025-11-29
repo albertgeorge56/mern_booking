@@ -4,6 +4,11 @@ import apiClient from './api-client'
 export const register = async (
     data: Omit<userRegisterSchemaType, 'confirmPassword'>
 ) => {
-    const response = await apiClient.post('/auth/register', data)
-    return response
+    const res = await apiClient.post('/auth/register', data)
+    return res.data
+}
+
+export const verifyUser = async () => {
+    const res = await apiClient.get('/auth/verify')
+    return res.data
 }

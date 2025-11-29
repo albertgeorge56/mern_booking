@@ -24,3 +24,7 @@ export const login = async (req: Request, res: Response) => {
   setAuthTokenCookie(res, genAuthToken(user))
   return res.sendStatus(StatusCodes.OK)
 }
+
+export const verifyUser = async (req: Request, res: Response) => {
+  return res.json({ message: 'verified', data: req.user })
+}

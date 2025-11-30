@@ -22,9 +22,17 @@ export const login = async (req: Request, res: Response) => {
   const user = await User.findOne({ email }).select('+password')
   if (!user || !user.matchPassword(password)) throw new CustomError('Invaid Credentials', 400)
   setAuthTokenCookie(res, genAuthToken(user))
-  return res.sendStatus(StatusCodes.OK)
+  return res.status(StatusCodes.OK).json({ message: 'Logged In Successfully', data: user })
 }
 
 export const verifyUser = async (req: Request, res: Response) => {
   return res.json({ message: 'verified', data: req.user })
+}
+
+export const logout = async (req: Request, res: Response) => {
+  res.clearCookie('auth_token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+  })
+  return res.json({ message: 'Logged Out Successfully' })
 }

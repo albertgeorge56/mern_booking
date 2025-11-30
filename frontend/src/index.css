@@ -13,6 +13,9 @@
     .btn-white {
         @apply bg-white hover:border-white hover:text-white;
     }
+    .smooth-underline {
+        @apply underline underline-offset-8 decoration-transparent hover:decoration-black transition duration-300;
+    }
 }
 
 @layer utility {

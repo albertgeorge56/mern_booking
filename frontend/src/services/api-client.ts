@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'sonner'
 
 const apiClient = axios.create({
     baseURL: '/api/',
@@ -7,9 +8,12 @@ const apiClient = axios.create({
 })
 
 apiClient.interceptors.response.use(
-    (res) => res,
+    (res) => {
+        if (res.data?.message) toast.success(res.data?.message)
+        return res
+    },
     (error) => {
-        console.log(error.response?.data?.error)
+        toast.error(error.response?.data?.error)
         return Promise.reject(error)
     }
 )

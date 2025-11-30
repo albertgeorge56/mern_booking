@@ -1,10 +1,14 @@
-import { verifyUser } from '@/services/auth.service'
+import type { userLoginSchemaType } from '@/schemas/user.schema'
+import * as authService from '@/services/auth.service'
 import type { UserType } from '@/types/user'
-import { useQuery } from '@tanstack/react-query'
 import React, { useContext, useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 type AppContextType = {
     user: UserType | null
+    isLoggedIn: boolean
+    login: ({ email, password }: userLoginSchemaType) => Promise<void>
+    logout: () => Promise<void>
 }
 
 const AppContext = React.createContext<AppContextType | undefined>(undefined)
@@ -15,16 +19,36 @@ export function AppContextProvider({
     children: React.ReactNode
 }) {
     const [user, setUser] = useState<UserType | null>(null)
-    const { data } = useQuery({
-        queryKey: ['auth'],
-        queryFn: verifyUser,
-        retry: false,
-    })
+    const isLoggedIn = !!user
+
     useEffect(() => {
-        setUser(data?.data)
-    }, [data])
+        authService
+            .verifyUser()
+            .then((data) => setUser(data))
+            .catch(() => {
+                toast.error('Something Went Wrong.')
+                setUser(null)
+            })
+    }, [])
+
+    const login = async ({ email, password }: userLoginSchemaType) => {
+        const data = await authService.login({ email, password })
+        setUser(data)
+    }
+
+    const logout = async () => {
+        try {
+            await authService.logout()
+            setUser(null)
+        } catch (error) {
+            toast.error('Something Went Wrong.')
+        }
+    }
+
     return (
-        <AppContext.Provider value={{ user }}>{children}</AppContext.Provider>
+        <AppContext.Provider value={{ isLoggedIn, login, logout, user }}>
+            {children}
+        </AppContext.Provider>
     )
 }
 

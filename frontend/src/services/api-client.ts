@@ -9,7 +9,11 @@ const apiClient = axios.create({
 
 apiClient.interceptors.response.use(
     (res) => {
-        if (res.data?.message) toast.success(res.data?.message)
+        if (res.data?.message)
+            toast.success(
+                (res.data?.message as string).charAt(0).toUpperCase() +
+                    (res.data?.message as string).slice(1)
+            )
         return res
     },
     (error) => {

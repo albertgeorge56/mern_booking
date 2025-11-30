@@ -25,7 +25,7 @@ function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <AppContextProvider>
-                <Toaster position="top-right" richColors />
+                <Toaster position="top-right" richColors closeButton />
                 <Routes>
                     <Route path="/" element={<Layout />}>
                         <Route index element={<Home />} />

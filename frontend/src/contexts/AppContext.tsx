@@ -2,6 +2,7 @@ import type { userLoginSchemaType } from '@/schemas/user.schema'
 import * as authService from '@/services/auth.service'
 import type { UserType } from '@/types/user'
 import React, { useContext, useEffect, useState } from 'react'
+
 import { toast } from 'sonner'
 
 type AppContextType = {
@@ -22,18 +23,20 @@ export function AppContextProvider({
     const isLoggedIn = !!user
 
     useEffect(() => {
-        authService
-            .verifyUser()
-            .then((data) => setUser(data))
-            .catch(() => {
-                toast.error('Something Went Wrong.')
+        ;(async () => {
+            try {
+                const data = await authService.verifyUser()
+                setUser(data)
+            } catch {
                 setUser(null)
-            })
+            }
+        })()
     }, [])
 
     const login = async ({ email, password }: userLoginSchemaType) => {
         const data = await authService.login({ email, password })
         setUser(data)
+        return data
     }
 
     const logout = async () => {

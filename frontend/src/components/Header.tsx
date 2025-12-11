@@ -29,7 +29,7 @@ export default function Header() {
                             <button
                                 onClick={() => {
                                     logout()
-                                    navigate('/login')
+                                    navigate('/login', { replace: true })
                                 }}
                                 className="btn btn-primary"
                             >

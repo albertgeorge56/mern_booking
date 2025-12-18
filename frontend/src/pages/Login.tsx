@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { userLoginSchema } from '../schemas/user.schema'
 import type { userLoginSchemaType } from '../schemas/user.schema'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { useAppContext } from '@/contexts/AppContext'
 
 export default function Login() {
@@ -69,6 +69,15 @@ export default function Login() {
                 >
                     Login
                 </button>
+                <p className="mt-2 font-semibold">
+                    Don't Have Account?{' '}
+                    <Link
+                        to="/register"
+                        className="underline underline-offset-4"
+                    >
+                        Register Now.
+                    </Link>
+                </p>
             </form>
         </div>
     )

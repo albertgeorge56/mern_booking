@@ -5,7 +5,7 @@ import type { userRegisterSchemaType } from '../schemas/user.schema'
 import { useMutation } from '@tanstack/react-query'
 import * as authService from '../services/auth.service'
 import { toast } from 'sonner'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 export default function Register() {
     const navigate = useNavigate()
@@ -125,6 +125,12 @@ export default function Register() {
                 >
                     Register
                 </button>
+                <p className="mt-2 font-semibold">
+                    Don't Have Account?{' '}
+                    <Link to="/login" className="underline underline-offset-4">
+                        Login Now.
+                    </Link>
+                </p>
             </form>
         </div>
     )

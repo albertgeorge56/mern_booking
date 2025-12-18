@@ -20,16 +20,14 @@ export default function Header() {
                             >
                                 My Bookings
                             </Link>
-                            <Link
-                                className="smooth-underline"
-                                to="/my-bookings"
-                            >
+                            <Link className="smooth-underline" to="/my-hotels">
                                 My Hotels
                             </Link>
                             <button
                                 onClick={() => {
-                                    logout()
-                                    navigate('/login', { replace: true })
+                                    logout().then(() => {
+                                        navigate('/login', { replace: true })
+                                    })
                                 }}
                                 className="btn btn-primary"
                             >

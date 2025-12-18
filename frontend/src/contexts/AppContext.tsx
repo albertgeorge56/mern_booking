@@ -2,6 +2,7 @@ import type { userLoginSchemaType } from '@/schemas/user.schema'
 import * as authService from '@/services/auth.service'
 import type { UserType } from '@/types/user'
 import React, { useContext, useEffect, useState } from 'react'
+import { useLocation } from 'react-router'
 
 import { toast } from 'sonner'
 
@@ -19,19 +20,20 @@ export function AppContextProvider({
 }: {
     children: React.ReactNode
 }) {
+    const pathname = useLocation().pathname
     const [user, setUser] = useState<UserType | null>(null)
     const isLoggedIn = !!user
 
     useEffect(() => {
         ;(async () => {
             try {
-                const data = await authService.verifyUser()
+                const data = await authService.verifyUser(true)
                 setUser(data)
             } catch {
                 setUser(null)
             }
         })()
-    }, [])
+    }, [pathname])
 
     const login = async ({ email, password }: userLoginSchemaType) => {
         const data = await authService.login({ email, password })

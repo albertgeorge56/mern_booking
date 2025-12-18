@@ -1,5 +1,4 @@
-import axios, { type AxiosRequestConfig } from 'axios'
-import { useLocation } from 'react-router'
+import axios from 'axios'
 import { toast } from 'sonner'
 
 const apiClient = axios.create({
@@ -10,15 +9,16 @@ const apiClient = axios.create({
 
 apiClient.interceptors.response.use(
     (res) => {
-        if (res.data?.message)
+        if (res.data?.message && !res.config?.skipMessage) {
             toast.success(
                 (res.data?.message as string).charAt(0).toUpperCase() +
                     (res.data?.message as string).slice(1)
             )
+        }
         return res
     },
     (error) => {
-        if (error.config?.skipError) {
+        if (error.config?.skipMessage) {
             return Promise.reject(error)
         }
         toast.error(error.response?.data?.error)

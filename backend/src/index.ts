@@ -1,12 +1,18 @@
 import express from 'express'
-import 'dotenv/config'
+import path from 'path'
+import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import errorHandlerMiddleware from './middlewares/error-handler'
 import authRouter from './routes/auth.route'
 import cookieParser from 'cookie-parser'
+dotenv.config({
+  path: path.resolve(process.cwd(), process.env.CONFIG_PATH ?? '.env'),
+  override: process.env.NODE_ENV !== 'production',
+})
 ;(async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI as string)
+    console.log(`Connected to ${process.env.MONGO_URI}`)
   } catch (e) {
     console.log('Error Connecting to Database')
     process.exit(1)

@@ -20,7 +20,7 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   const { email, password } = userLoginSchema.parse(req.body)
   const user = await User.findOne({ email }).select('+password')
-  if (!user || !user.matchPassword(password)) throw new CustomError('Invaid Credentials', 400)
+  if (!user || !user.matchPassword(password)) throw new CustomError('Invalid Credentials', 400)
   setAuthTokenCookie(res, genAuthToken(user))
   return res.status(StatusCodes.OK).json({ message: 'Logged In Successfully', data: user })
 }

@@ -4,7 +4,6 @@ import { userRegisterSchema } from '../schemas/user.schema'
 import type { userRegisterSchemaType } from '../schemas/user.schema'
 import { useMutation } from '@tanstack/react-query'
 import * as authService from '../services/auth.service'
-import { toast } from 'sonner'
 import { Link, useNavigate } from 'react-router'
 
 export default function Register() {
@@ -26,12 +25,9 @@ export default function Register() {
 
     const mutation = useMutation({
         mutationFn: authService.register,
-        onSuccess: (res) => {
-            toast.success(res.data?.message)
+        onSuccess: () => {
+            // toast.success(res.data?.message)
             navigate('/')
-        },
-        onError: (err: any) => {
-            toast.error(err.response?.data?.error)
         },
     })
 

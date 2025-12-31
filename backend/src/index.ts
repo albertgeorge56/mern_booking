@@ -23,10 +23,13 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
-
 app.use('/api/auth', authRouter)
+app.use(express.static(path.join(__dirname, '../../frontend/dist')))
+app.get('/*path', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'))
+})
 
 app.use(errorHandlerMiddleware)
 app.listen(3000, () => {
-  console.log('Server is running')
+  console.log(`Server is running on http://localhost:3000`)
 })
